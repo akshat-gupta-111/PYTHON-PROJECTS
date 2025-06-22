@@ -27,7 +27,11 @@ def create():
             file = request.files[key]
             if file:
                 filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                if not (os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'],received_id))):
+                    os.mkdir(os.path.join(app.config['UPLOAD_FOLDER'],received_id))
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'],received_id, filename))
+                with open(os.path.join(app.config['UPLOAD_FOLDER'],received_id, "prompt.txt"), "w") as f:
+                    f.write(received_prompt)
                 
 
     return render_template("create.html", myid = myid)
