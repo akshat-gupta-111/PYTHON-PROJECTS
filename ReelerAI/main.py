@@ -25,19 +25,24 @@ def create():
         for key,val in request.files.items():
             print(f"{key} : {val}")
             file = request.files[key]
+            input_file = []
             if file:
                 filename = secure_filename(file.filename)
                 if not (os.path.exists(os.path.join(app.config['UPLOAD_FOLDER'],received_id))):
                     os.mkdir(os.path.join(app.config['UPLOAD_FOLDER'],received_id))
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'],received_id, filename))
+                input_file.append(filename)
                 with open(os.path.join(app.config['UPLOAD_FOLDER'],received_id, "prompt.txt"), "w") as f:
                     f.write(received_prompt)
                 
-
+        for fl in input_file:
+            with open(os.path.join(app.config['UPLOAD_FOLDER'],received_id, "input.txt"), "a") as f :
+                f.write(f"file '{fl}'\nduration 1\n")
     return render_template("create.html", myid = myid)
 
 @app.route("/gallery")
 def gallery():
-    return render_template("gallery.html")
+    reels = os.listdir('static/reels')
+    return render_template("gallery.html", reels = reels)
 
 app.run(debug = True)

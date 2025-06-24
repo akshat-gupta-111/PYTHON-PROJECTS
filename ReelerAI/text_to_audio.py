@@ -6,7 +6,7 @@ from elevenlabs.client import ElevenLabs
 from config import ELEVENLABS_API_KEY
 
 elevenlabs = ElevenLabs(
-    api_key=ELEVENLABS_API_KEY,
+    api_key = ELEVENLABS_API_KEY
 )
 
 
@@ -44,4 +44,3 @@ def text_to_speech_file(text: str, folder: str) -> str:
     # Return the path of the saved audio file
     return save_file_path
 
-# text_to_speech_file("tralale o tralala", 'ba370b0c-4e52-11f0-b7a9-a24d4a6beb6b')
